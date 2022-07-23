@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 public class RegistrationService {
 
     private final UserRepository userRepository;
+    private final MailSenderService mailSenderService;
 
     public String register(RegistrationRequest request){
 
         userRepository.save(new User(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), UserRole.ADMIN, request.getDob()));
-
-
-
+        mailSenderService.send(request.getEmail(), "testing the email");
         return "registered";
     }
+
 }

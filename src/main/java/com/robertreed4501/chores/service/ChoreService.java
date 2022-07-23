@@ -14,4 +14,8 @@ public class ChoreService {
     public void AddChore(Chore chore){
         choreRepository.save(chore);
     }
+
+    public String getAllChores() {
+        return choreRepository.findAll().toString();
+    }
 }

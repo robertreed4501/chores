@@ -1,9 +1,6 @@
 package com.robertreed4501.chores.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,17 +9,18 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
+@ToString
 public class Chore {
 
     @Id
     @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
+            name = "chore_sequence",
+            sequenceName = "chore_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
+            generator = "chore_sequence"
     )
     private Long id;
     private String name;
@@ -32,6 +30,12 @@ public class Chore {
     private Frequency frequency;
     @Enumerated(EnumType.STRING)
     private Scope scope;
+    @ManyToOne
+    @JoinColumn(
+            name = "group_id",
+            referencedColumnName = "id"
+    )
+    private UserGroup userGroup;
 
     public Chore(String name, ChoreLevel choreLevel, Frequency frequency, Scope scope) {
         this.name = name;

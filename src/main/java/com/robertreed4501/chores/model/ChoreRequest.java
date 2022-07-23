@@ -1,4 +1,4 @@
-package com.robertreed4501.chores.controller;
+package com.robertreed4501.chores.model;
 
 import lombok.*;
 

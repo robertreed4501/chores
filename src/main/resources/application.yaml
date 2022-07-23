@@ -6,7 +6,7 @@ spring:
     password: "mobius42"
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     properties:
       hibernate:
   mail:

@@ -1,8 +1,5 @@
 package com.robertreed4501.chores.model;
 
-
-
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +33,16 @@ public class User {
     private UserRole appUserRole;
     private Boolean locked = false;
     private Boolean enabled = false;
+    @ManyToOne
+    @JoinColumn(
+
+            nullable = true,
+            name = "group_id",
+            referencedColumnName = "id"
+    )
+    private UserGroup userGroup;
+
+
 
     public User(String firstName,
                 String lastName,
