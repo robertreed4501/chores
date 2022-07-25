@@ -1,4 +1,7 @@
 package com.robertreed4501.chores.repository;
 
-public interface MessageRepository {
+
+@Repository
+public interface MessageRepository extends JpaRepository<Message, Long>{
+	
 }
