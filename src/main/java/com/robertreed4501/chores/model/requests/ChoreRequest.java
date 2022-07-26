@@ -1,4 +1,4 @@
-package com.robertreed4501.chores.model;
+package com.robertreed4501.chores.model.requests;
 
 import lombok.*;
 
@@ -10,4 +10,5 @@ import lombok.*;
 public class ChoreRequest {
     private final String name;
     private final String scope;
+    private final Long userGroupId;
 }

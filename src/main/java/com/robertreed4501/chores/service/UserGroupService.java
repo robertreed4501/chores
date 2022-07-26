@@ -1,6 +1,6 @@
 package com.robertreed4501.chores.service;
 
-import com.robertreed4501.chores.model.UserGroup;
+import com.robertreed4501.chores.model.db.UserGroup;
 import com.robertreed4501.chores.repository.UserGroupRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,5 +14,9 @@ public class UserGroupService {
     public String save(UserGroup userGroup){
         userGroupRepository.save(userGroup);
         return "group saved";
+    }
+
+    public UserGroup findById(Long userGroupId) {
+        return userGroupRepository.findById(userGroupId).orElseThrow();
     }
 }

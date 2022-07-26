@@ -1,6 +1,6 @@
 package com.robertreed4501.chores.controller;
 
-import com.robertreed4501.chores.model.RegistrationRequest;
+import com.robertreed4501.chores.model.requests.RegistrationRequest;
 import com.robertreed4501.chores.service.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

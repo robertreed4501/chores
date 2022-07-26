@@ -1,4 +1,4 @@
-package com.robertreed4501.chores.model;
+package com.robertreed4501.chores.model.db;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -38,4 +38,9 @@ public class Assignment {
             referencedColumnName = "id"
     )
     private Chore chore;
+
+    public Assignment(User user, Chore chore) {
+        this.user = user;
+        this.chore = chore;
+    }
 }

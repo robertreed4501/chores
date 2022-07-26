@@ -1,6 +1,6 @@
 package com.robertreed4501.chores.service;
 
-import com.robertreed4501.chores.model.Receipt;
+import com.robertreed4501.chores.model.db.Receipt;
 import com.robertreed4501.chores.repository.ReceiptRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

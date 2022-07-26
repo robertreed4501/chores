@@ -1,5 +1,7 @@
-package com.robertreed4501.chores.model;
+package com.robertreed4501.chores.model.db;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.robertreed4501.chores.model.enums.UserRole;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +36,7 @@ public class User {
     private Boolean locked = false;
     private Boolean enabled = false;
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(
 
             nullable = true,

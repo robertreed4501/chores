@@ -1,5 +1,6 @@
-package com.robertreed4501.chores.model;
+package com.robertreed4501.chores.model.db;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,8 +37,10 @@ public class UserGroup {
     private User user;
     private LocalDateTime created;
     @OneToMany(mappedBy = "userGroup")
+    @JsonManagedReference
     List<User> users;
     @OneToMany(mappedBy = "userGroup")
+    @JsonManagedReference
     List<Chore> chores;
 
     public UserGroup(User user, LocalDateTime created) {
