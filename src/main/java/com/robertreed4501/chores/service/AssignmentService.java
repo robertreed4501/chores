@@ -36,4 +36,7 @@ public class AssignmentService {
         assignmentRepository.save(new Assignment(user, chore));
     }
 
+    public Assignment getAssignmentById(Long id){
+        return assignmentRepository.findById(id).orElseThrow();
+    }
 }

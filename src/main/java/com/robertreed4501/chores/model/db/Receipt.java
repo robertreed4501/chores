@@ -26,24 +26,16 @@ public class Receipt {
     @ManyToOne
     @JoinColumn(
             nullable = false,
-            name = "user_id",
+            name = "assignment_id",
             referencedColumnName = "id"
     )
-    private User user;
-    @ManyToOne
-    @JoinColumn(
-            nullable = false,
-            name = "chore_id",
-            referencedColumnName = "id"
-    )
-    private Chore chore;
+    private Assignment assignment;
     private LocalDateTime timestamp;
     private boolean confirmed;
     private boolean paid;
 
-    public Receipt(User user, Chore chore, LocalDateTime timestamp, boolean confirmed, boolean paid) {
-        this.user = user;
-        this.chore = chore;
+    public Receipt(Assignment assignment, LocalDateTime timestamp, boolean confirmed, boolean paid) {
+        this.assignment = assignment;
         this.timestamp = timestamp;
         this.confirmed = confirmed;
         this.paid = paid;
