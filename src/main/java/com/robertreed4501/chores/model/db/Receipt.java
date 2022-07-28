@@ -1,5 +1,6 @@
 package com.robertreed4501.chores.model.db;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,6 +30,7 @@ public class Receipt {
             name = "assignment_id",
             referencedColumnName = "id"
     )
+    @JsonBackReference
     private Assignment assignment;
     private LocalDateTime timestamp;
     private boolean confirmed;

@@ -1,11 +1,13 @@
 package com.robertreed4501.chores.model.db;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,6 +40,9 @@ public class Assignment {
             referencedColumnName = "id"
     )
     private Chore chore;
+    @OneToMany(mappedBy = "assignment")
+    @JsonManagedReference
+    private List<Receipt> receipts;
 
     public Assignment(User user, Chore chore) {
         this.user = user;
