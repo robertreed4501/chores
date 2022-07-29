@@ -14,7 +14,7 @@ target/
 .sts4-cache
 *.yaml
 *.p12
-**/resources
+
 
 ### IntelliJ IDEA ###
 .idea

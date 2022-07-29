@@ -22,26 +22,27 @@ public class TrialViewController {
     public List<TrialView> tryView(){
 
         List<TrialView> view = new ArrayList<>();
-        userRepository.getReferenceById(Long.valueOf("1")).getAssignments().forEach(
-                assignment -> {
-                    if (assignment.getReceipts().isEmpty()){
-                        view.add(new TrialView(
-                                assignment.getUser().getFirstName(),
-                                assignment.getChore().getName(),
-                                false
-                                )
-                        );
+        for (int i = 3; i < 6; i++) {
+            userRepository.getReferenceById((long) i).getAssignments().forEach(
+                    assignment -> {
+                        if (assignment.getReceipts().isEmpty()) {
+                            view.add(new TrialView(
+                                    assignment.getUser().getFirstName(),
+                                    assignment.getChore().getName(),
+                                    false
+                                    )
+                            );
+                        } else {
+                            view.add(new TrialView(
+                                    assignment.getUser().getFirstName(),
+                                    assignment.getChore().getName(),
+                                    true
+                                    )
+                            );
+                        }
                     }
-                    else{
-                        view.add(new TrialView(
-                                assignment.getUser().getFirstName(),
-                                assignment.getChore().getName(),
-                                true
-                                )
-                        );
-                    }
-                }
-        );
+            );
+        }
         return view;
     }
 }
