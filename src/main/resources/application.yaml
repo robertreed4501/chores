@@ -16,6 +16,7 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
+    show-sql: true
   mail:
     host: localhost
     port: 1025
