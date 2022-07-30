@@ -1,7 +1,7 @@
 package com.robertreed4501.chores.controller;
 
 import com.robertreed4501.chores.model.db.Assignment;
-import com.robertreed4501.chores.model.requests.AssignmentRequest;
+import com.robertreed4501.chores.model.http.requests.AssignmentRequest;
 import com.robertreed4501.chores.service.AssignmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

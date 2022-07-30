@@ -1,6 +1,8 @@
 package com.robertreed4501.chores.controller;
 
 import com.robertreed4501.chores.model.TrialView;
+import com.robertreed4501.chores.model.http.response.Dashboard;
+import com.robertreed4501.chores.repository.DashboardRepository;
 import com.robertreed4501.chores.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,6 +18,7 @@ import java.util.List;
 public class TrialViewController {
 
     UserRepository userRepository;
+    DashboardRepository dashboardRepository;
 
     @GetMapping
     public List<TrialView> tryView(){
@@ -44,5 +46,10 @@ public class TrialViewController {
             );
         }
         return view;
+    }
+
+    @GetMapping("/view")
+    public List<Dashboard> viewDashboard (){
+        return dashboardRepository.findAll();
     }
 }

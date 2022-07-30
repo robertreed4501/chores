@@ -1,6 +1,6 @@
 package com.robertreed4501.chores.service;
 
-import com.robertreed4501.chores.model.requests.RegistrationRequest;
+import com.robertreed4501.chores.model.http.requests.RegistrationRequest;
 import com.robertreed4501.chores.model.db.User;
 import com.robertreed4501.chores.model.enums.UserRole;
 import com.robertreed4501.chores.repository.UserRepository;

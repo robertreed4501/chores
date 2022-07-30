@@ -1,4 +1,4 @@
-package com.robertreed4501.chores.model.requests;
+package com.robertreed4501.chores.model.http.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

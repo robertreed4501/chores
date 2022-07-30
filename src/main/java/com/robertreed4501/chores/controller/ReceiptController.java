@@ -1,8 +1,6 @@
 package com.robertreed4501.chores.controller;
 
-import com.robertreed4501.chores.model.db.Assignment;
 import com.robertreed4501.chores.model.db.Receipt;
-import com.robertreed4501.chores.model.requests.ReceiptRequest;
 import com.robertreed4501.chores.service.ReceiptService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
