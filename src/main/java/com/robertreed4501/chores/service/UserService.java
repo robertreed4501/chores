@@ -17,7 +17,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserGroupRepository userGroupRepository;
 
-    public String save(User user){
+    public String addUser(User user){
         userRepository.save(user);
         return "user saved";
     }
@@ -28,6 +28,20 @@ public class UserService {
         }catch(NoSuchElementException e){
             return null;
         }
+    }
+
+    public User getUserByUsername(String username) {
+        User user = userRepository.findUserByEmail(username).orElse(null);
+        return user;
+    }
+
+    public User getUserByApiKey(String key) {
+        return userRepository.findUserByApiKey(key);
+                /*findAll().
+                stream().
+                filter(user -> user.getApiKey()!=null).collect(Collectors.toList()).
+                stream().
+                filter(user -> user.getApiKey().equals(key)).findFirst().orElse(null);*/
 
     }
 }

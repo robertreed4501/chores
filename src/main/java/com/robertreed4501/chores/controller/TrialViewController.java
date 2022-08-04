@@ -1,11 +1,15 @@
 package com.robertreed4501.chores.controller;
 
 import com.robertreed4501.chores.model.TrialView;
+import com.robertreed4501.chores.model.db.User;
+import com.robertreed4501.chores.model.enums.UserRole;
 import com.robertreed4501.chores.model.http.response.Dashboard;
 import com.robertreed4501.chores.repository.DashboardRepository;
 import com.robertreed4501.chores.repository.UserRepository;
+import com.robertreed4501.chores.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +21,7 @@ import java.util.List;
 @RequestMapping("/testing")
 public class TrialViewController {
 
+    AuthService authService;
     UserRepository userRepository;
     DashboardRepository dashboardRepository;
 
@@ -49,7 +54,16 @@ public class TrialViewController {
     }
 
     @GetMapping("/view")
-    public List<Dashboard> viewDashboard (){
-        return dashboardRepository.findAll();
+    public List<Dashboard> viewDashboard (@RequestHeader("key") String key){
+
+        final User user = authService.authorizeApiKey(key);
+
+        if (user == null){
+            return null;
+        }
+        else if(user.getAppUserRole() == UserRole.USER){
+            return null;
+        }
+        else return dashboardRepository.findAll();
     }
 }

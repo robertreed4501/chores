@@ -2,7 +2,6 @@ package com.robertreed4501.chores.model.db;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.robertreed4501.chores.model.enums.UserRole;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +10,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 @NoArgsConstructor
 @Entity
 public class User {
@@ -47,6 +45,9 @@ public class User {
     private UserGroup userGroup;
     @OneToMany(mappedBy = "user")
     private List<Assignment> assignments;
+    @OneToOne(mappedBy = "user")
+    private ConfirmationToken confirmationToken;
+    private String apiKey;
 
 
     public User(String firstName,
