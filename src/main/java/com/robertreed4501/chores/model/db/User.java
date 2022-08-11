@@ -2,6 +2,7 @@ package com.robertreed4501.chores.model.db;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.robertreed4501.chores.model.enums.UserRole;
+import com.robertreed4501.chores.model.http.response.UserResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -65,6 +66,17 @@ public class User {
         this.dob = dob;
         this.locked = locked;
         this.enabled = enabled;
+    }
+
+    public UserResponse getUserResponse(){
+        return new UserResponse(
+                this.id,
+                this.firstName,
+                this.lastName,
+                this.email,
+                this.appUserRole.name(),
+                this.apiKey
+                );
     }
 }
 

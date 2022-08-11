@@ -1,5 +1,6 @@
 package com.robertreed4501.chores.model.http.response;
 
+import com.robertreed4501.chores.model.db.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,6 @@ import lombok.Setter;
 @Setter
 public class LoginResponse {
 
-    private String key;
+    private UserResponse userResponse;
     private String error;
 }

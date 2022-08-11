@@ -31,8 +31,8 @@ public class LoginService {
             response = new LoginResponse(null, "invalid password");
         } else{
             String key = UUID.randomUUID().toString();
-            response = new LoginResponse(key, null );
             user.setApiKey(key);
+            response = new LoginResponse(user.getUserResponse(), null );
 
         }
 

@@ -19,7 +19,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    @CrossOrigin
+
     public String register(@RequestBody RegistrationRequest request) {
         return registrationService.register(request);
     }

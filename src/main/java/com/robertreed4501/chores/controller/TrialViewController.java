@@ -53,17 +53,5 @@ public class TrialViewController {
         return view;
     }
 
-    @GetMapping("/view")
-    public List<Dashboard> viewDashboard (@RequestHeader("key") String key){
 
-        final User user = authService.authorizeApiKey(key);
-
-        if (user == null){
-            return null;
-        }
-        else if(user.getAppUserRole() == UserRole.USER){
-            return null;
-        }
-        else return dashboardRepository.findAll();
-    }
 }
