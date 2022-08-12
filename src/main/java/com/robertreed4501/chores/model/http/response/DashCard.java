@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,7 +17,7 @@ public class DashCard {
 
     private Long userId;
     private String name;
-    private List<Dashboard> chores;
+    private List<List<Dashboard>> chores;
 
     public DashCard(String name) {
         this.name = name;
@@ -28,7 +29,21 @@ public class DashCard {
     }
 
     public void addChore(Dashboard chore){
-        this.chores.add(chore);
-    }
 
+        List<Dashboard> matchingList = this.chores.stream()
+                .filter(choreList ->
+                        choreList.stream().anyMatch(currentChore ->
+                                currentChore.getName().equals(chore.getName())))
+                .findFirst()
+                .orElse(null);
+
+        if (matchingList == null){
+            List<Dashboard> tempList = new ArrayList<>();
+            tempList.add(chore);
+            this.chores.add(tempList);
+        }
+        else{
+            matchingList.add(chore);
+        }
+    }
 }
