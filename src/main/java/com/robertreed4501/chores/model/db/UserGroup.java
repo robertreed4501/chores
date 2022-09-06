@@ -36,7 +36,7 @@ public class UserGroup {
     )
     private User user;
     private LocalDateTime created;
-    @OneToMany(mappedBy = "userGroup")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "userGroup")
     @JsonManagedReference
     List<User> users;
     @OneToMany(mappedBy = "userGroup")
