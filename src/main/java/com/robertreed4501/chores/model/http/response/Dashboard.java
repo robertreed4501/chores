@@ -23,6 +23,7 @@ public class Dashboard {
     private String firstName;
     private Long userId;
     private Long groupId;
+    private Long assignmentId;
     private String name;
     @Enumerated(EnumType.STRING)
     private Frequency frequency;
