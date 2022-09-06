@@ -2,11 +2,15 @@ package com.robertreed4501.chores.service;
 
 import com.robertreed4501.chores.model.db.User;
 import com.robertreed4501.chores.model.db.UserGroup;
+import com.robertreed4501.chores.model.http.response.LoginResponse;
+import com.robertreed4501.chores.model.http.response.UserResponse;
+import com.robertreed4501.chores.model.http.response.UsersInGroupResponse;
 import com.robertreed4501.chores.repository.UserGroupRepository;
 import com.robertreed4501.chores.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -22,9 +26,13 @@ public class UserService {
         return "user saved";
     }
 
-    public List<User> getUsersByGroupId(Long id) {
+    public List<UsersInGroupResponse> getUsersByGroupId(Long id) {
         try{
-            return userGroupRepository.findById(id).get().getUsers();
+            List<UsersInGroupResponse> userList = new ArrayList<>();
+            userGroupRepository.findById(id).get().getUsers().stream().forEach(user -> {
+                userList.add(new UsersInGroupResponse(user.getId(), user.getFirstName()));
+            });
+            return userList;
         }catch(NoSuchElementException e){
             return null;
         }
@@ -43,5 +51,20 @@ public class UserService {
                 stream().
                 filter(user -> user.getApiKey().equals(key)).findFirst().orElse(null);*/
 
+    }
+
+    public LoginResponse getUserLoginResponseByApiKey(String key) {
+        User user = userRepository.findUserByApiKey(key);
+
+        return new LoginResponse(
+                new UserResponse(
+                        user.getId(),
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getEmail(),
+                        user.getAppUserRole().toString(),
+                        user.getApiKey()
+                ),
+                null);
     }
 }
