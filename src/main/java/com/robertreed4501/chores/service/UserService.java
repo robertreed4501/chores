@@ -63,7 +63,8 @@ public class UserService {
                         user.getLastName(),
                         user.getEmail(),
                         user.getAppUserRole().toString(),
-                        user.getApiKey()
+                        user.getApiKey(),
+                        user.getUserGroup().getId()
                 ),
                 null);
     }
