@@ -35,7 +35,7 @@ public class DashboardService {
                 List<Dashboard> choreList = new ArrayList<>();
                 choreList.add(row);
                 choreListList.add(choreList);
-                cardList.add(new DashCard(row.getId(), row.getFirstName(),choreListList));
+                cardList.add(new DashCard(row.getUserId(), row.getFirstName(),choreListList));
             }
         });
         return cardList;
