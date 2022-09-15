@@ -75,7 +75,8 @@ public class User {
                 this.lastName,
                 this.email,
                 this.appUserRole.name(),
-                this.apiKey
+                this.apiKey,
+                this.getUserGroup().getId()
                 );
     }
 }
