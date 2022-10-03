@@ -42,6 +42,8 @@ public class Assignment {
     @OneToMany(mappedBy = "assignment")
     @JsonManagedReference
     private List<Receipt> receipts;
+    @Column(nullable = false, columnDefinition = "TINYINT(1)")
+    private boolean active;
 
     public Assignment(User user, Chore chore) {
         this.user = user;

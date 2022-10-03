@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/chores")
+@CrossOrigin
 public class ChoreController {
 
     private final ChoreService choreService;

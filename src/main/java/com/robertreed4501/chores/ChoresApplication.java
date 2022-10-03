@@ -20,6 +20,7 @@ public class ChoresApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**").allowedOrigins("*");
 			}
+
 		};
 	}
 }
