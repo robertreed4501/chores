@@ -25,8 +25,7 @@ public class Dashboard {
     private Long groupId;
     private Long assignmentId;
     private String name;
-    @Enumerated(EnumType.STRING)
-    private Frequency frequency;
+    private int multiplier;
     private String done;
 
 }

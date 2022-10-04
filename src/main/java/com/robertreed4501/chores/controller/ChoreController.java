@@ -27,7 +27,7 @@ public class ChoreController {
                 new Chore(
                         choreRequest.getName(),
                         ChoreLevel.MEDIUM,
-                        Frequency.WEEKLY,
+                        1,
                         Scope.PERSONAL,
                         userGroupService.findById(choreRequest.getUserGroupId())
                 )

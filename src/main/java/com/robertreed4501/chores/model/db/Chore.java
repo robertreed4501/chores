@@ -30,8 +30,8 @@ public class Chore {
     private String name;
     @Enumerated(EnumType.STRING)
     private ChoreLevel choreLevel;
-    @Enumerated(EnumType.STRING)
-    private Frequency frequency;
+
+    private int multiplier;
     @Enumerated(EnumType.STRING)
     private Scope scope;
     @ManyToOne
@@ -42,10 +42,10 @@ public class Chore {
     )
     private UserGroup userGroup;
 
-    public Chore(String name, ChoreLevel choreLevel, Frequency frequency, Scope scope, UserGroup userGroup) {
+    public Chore(String name, ChoreLevel choreLevel, int multiplier, Scope scope, UserGroup userGroup) {
         this.name = name;
         this.choreLevel = choreLevel;
-        this.frequency = frequency;
+        this.multiplier = multiplier;
         this.scope = scope;
         this.userGroup = userGroup;
     }
