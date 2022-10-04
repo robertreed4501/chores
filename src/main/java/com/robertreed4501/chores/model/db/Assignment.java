@@ -43,7 +43,7 @@ public class Assignment {
     @JsonManagedReference
     private List<Receipt> receipts;
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean active;
+    private boolean active = true;
 
     public Assignment(User user, Chore chore) {
         this.user = user;

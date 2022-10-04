@@ -5,6 +5,7 @@ import com.robertreed4501.chores.model.http.requests.AssignmentRequest;
 import com.robertreed4501.chores.model.http.requests.DeleteAssignmentRequest;
 import com.robertreed4501.chores.model.http.response.DashCard;
 import com.robertreed4501.chores.service.AssignmentService;
+import com.robertreed4501.chores.service.DashboardService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +17,12 @@ import java.util.List;
 public class AssignmentController {
 
     private final AssignmentService assignmentService;
+    private final DashboardService dashboardService;
 
-    @PostMapping
-    public String addAssignment(@RequestBody AssignmentRequest request){
+    @PostMapping("/add")
+    public List<DashCard> addAssignment(@RequestBody AssignmentRequest request){
         assignmentService.addAssignment(request);
-        return "assignment added";
+        return dashboardService.getDashboard(request.getGroupId());
     }
 
     @GetMapping
