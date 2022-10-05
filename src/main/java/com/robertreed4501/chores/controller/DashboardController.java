@@ -34,5 +34,8 @@ public class DashboardController {
         else return dashboardService.getDashboard(user.getUserGroup().getId());
     }
 
-
+    @GetMapping("/user")
+    public DashCard getUserDashCard(@RequestParam Long userId){
+        return dashboardService.getUserDashCard(userId);
+    }
 }
