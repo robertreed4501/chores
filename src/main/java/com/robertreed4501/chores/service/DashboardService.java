@@ -6,10 +6,7 @@ import com.robertreed4501.chores.repository.DashboardRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -39,6 +36,9 @@ public class DashboardService {
                 cardList.add(new DashCard(row.getUserId(), row.getFirstName(),choreListList));
             }
         });
+        cardList.stream().forEach(card -> {
+            Collections.sort(card.getChores(), (o1, o2) -> o1.size() - o2.size());
+        });
         return cardList;
     }
 
@@ -63,6 +63,9 @@ public class DashboardService {
                 choreListList.add(choreList);
                 cardList.add(new DashCard(row.getUserId(), row.getFirstName(),choreListList));
             }
+        });
+        cardList.stream().forEach(card -> {
+            Collections.sort(card.getChores(), (o1, o2) -> o1.size() - o2.size());
         });
         return cardList.get(0);
     }
