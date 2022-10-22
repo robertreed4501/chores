@@ -3,6 +3,7 @@ package com.robertreed4501.chores.controller;
 import com.robertreed4501.chores.model.db.User;
 import com.robertreed4501.chores.model.db.UserGroup;
 import com.robertreed4501.chores.model.http.response.LoginResponse;
+import com.robertreed4501.chores.model.http.response.UserResponse;
 import com.robertreed4501.chores.model.http.response.UsersInGroupResponse;
 import com.robertreed4501.chores.repository.UserGroupRepository;
 import com.robertreed4501.chores.service.UserService;
@@ -20,7 +21,7 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/mygroup")
-    public List<UsersInGroupResponse> getUsersByGroupId(@RequestParam Long id){
+    public List<UserResponse> getUsersByGroupId(@RequestParam Long id){
         return userService.getUsersByGroupId(id);
     }
 
