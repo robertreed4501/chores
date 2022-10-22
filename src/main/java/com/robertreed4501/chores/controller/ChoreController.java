@@ -5,7 +5,9 @@ import com.robertreed4501.chores.model.enums.ChoreLevel;
 import com.robertreed4501.chores.model.enums.Frequency;
 import com.robertreed4501.chores.model.enums.Scope;
 import com.robertreed4501.chores.model.http.requests.ChoreRequest;
+import com.robertreed4501.chores.model.http.response.DashCard;
 import com.robertreed4501.chores.service.ChoreService;
+import com.robertreed4501.chores.service.DashboardService;
 import com.robertreed4501.chores.service.UserGroupService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +22,10 @@ public class ChoreController {
 
     private final ChoreService choreService;
     private final UserGroupService userGroupService;
+    private final DashboardService dashboardService;
 
     @PostMapping
-    public String addChore(@RequestBody ChoreRequest choreRequest){
+    public List<DashCard> addChore(@RequestBody ChoreRequest choreRequest){
         choreService.AddChore(
                 new Chore(
                         choreRequest.getName(),
@@ -32,7 +35,7 @@ public class ChoreController {
                         userGroupService.findById(choreRequest.getUserGroupId())
                 )
         );
-        return "chore added";
+        return dashboardService.getDashboard(choreRequest.getUserGroupId());
     }
 
     @GetMapping("/mygroup")
