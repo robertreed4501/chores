@@ -1,6 +1,7 @@
 package com.robertreed4501.chores.service;
 
 import com.robertreed4501.chores.model.db.UserGroup;
+import com.robertreed4501.chores.model.http.requests.NewUserRequest;
 import com.robertreed4501.chores.model.http.requests.RegistrationRequest;
 import com.robertreed4501.chores.model.db.User;
 import com.robertreed4501.chores.model.enums.UserRole;
@@ -36,6 +37,15 @@ public class RegistrationService {
 
         //TODO create new user first, then create new group and assign new user to new group
 
+
+    }
+
+    public String addUser(NewUserRequest request) {
+
+        User user = new User(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), UserRole.USER, request.getDob());
+        user.setUserGroup(userGroupService.findById(request.getGroupId()));
+        userService.addUser(user);
+         return "User added.";
 
     }
 
