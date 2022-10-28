@@ -29,24 +29,24 @@ SET `group_id` = 1
 WHERE `id` BETWEEN 0 AND 6;
 
 INSERT INTO `chores1`.`chore`
-(`id`,`chore_level`,`frequency`,`name`,`scope`,`group_id`)
+(`id`,`chore_level`,`multiplier`,`name`,`scope`,`group_id`)
 VALUES
-(1,'EASY','WEEKLY','Laundry','PERSONAL',1),
-(2,'EASY','WEEKLY','Cook a Meal','PERSONAL',1),
-(3,'EASY','WEEKLY','Clean Room','PERSONAL',1),
-(4,'EASY','WEEKLY','Vacuum','PERSONAL',1),
-(5,'EASY','WEEKLY','Clean Litter Box','PERSONAL',1),
-(6,'EASY','WEEKLY','Mop','PERSONAL',1),
-(7,'EASY','WEEKLY','Clean Bathroom','PERSONAL',1),
-(8,'EASY','WEEKLY','Little Trash Cans','PERSONAL',1),
-(9,'EASY','WEEKLY','Collect Dishes','PERSONAL',1),
-(10,'EASY','DAILY','Wash Dishes','PERSONAL',1),
-(11,'EASY','DAILY','Sweep','PERSONAL',1),
-(12,'EASY','DAILY','Feed Animals','PERSONAL',1),
-(13,'EASY','WEEKLY','Scoop Poop','GROUP',1),
-(14,'EASY','WEEKLY','Take Trash to Dump','GROUP',1),
-(15,'EASY','WEEKLY','Pick Up Back Yard','GROUP',1),
-(16,'EASY','WEEKLY','Clean Microwave','GROUP',1);
+(1,'EASY',1,'Laundry','PERSONAL',1),
+(2,'EASY',1,'Cook a Meal','PERSONAL',1),
+(3,'EASY',1,'Clean Room','PERSONAL',1),
+(4,'EASY',1,'Vacuum','PERSONAL',1),
+(5,'EASY',1,'Clean Litter Box','PERSONAL',1),
+(6,'EASY',1,'Mop','PERSONAL',1),
+(7,'EASY',1,'Clean Bathroom','PERSONAL',1),
+(8,'EASY',1,'Little Trash Cans','PERSONAL',1),
+(9,'EASY',1,'Collect Dishes','PERSONAL',1),
+(10,'EASY',5,'Wash Dishes','PERSONAL',1),
+(11,'EASY',5,'Sweep','PERSONAL',1),
+(12,'EASY',5,'Feed Animals','PERSONAL',1),
+(13,'EASY',1,'Scoop Poop','GROUP',1),
+(14,'EASY',1,'Take Trash to Dump','GROUP',1),
+(15,'EASY',1,'Pick Up Back Yard','GROUP',1),
+(16,'EASY',1,'Clean Microwave','GROUP',1);
 
 UPDATE `chores1`.`chore_sequence`
 SET `next_val` = 17
