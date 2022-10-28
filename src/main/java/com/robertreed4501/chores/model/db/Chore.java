@@ -41,6 +41,7 @@ public class Chore {
             referencedColumnName = "id"
     )
     private UserGroup userGroup;
+    private boolean enabled = true;
 
     public Chore(String name, ChoreLevel choreLevel, int multiplier, Scope scope, UserGroup userGroup) {
         this.name = name;
