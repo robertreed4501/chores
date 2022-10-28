@@ -28,7 +28,7 @@ public class RegistrationService {
 
     public String register(RegistrationRequest request){
         if (userService.existsByEmail(request.getEmail())) return "Email already exists.";
-        User user = new User(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), UserRole.ADMIN, request.getDob());
+        User user = new User(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), UserRole.OWNER, request.getDob());
         UUID key = UUID.randomUUID();
         user.setApiKey(key.toString());
         System.out.println(user.getId() + " - user.getId()");
