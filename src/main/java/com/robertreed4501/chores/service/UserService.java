@@ -1,6 +1,8 @@
 package com.robertreed4501.chores.service;
 
 import com.robertreed4501.chores.model.db.User;
+import com.robertreed4501.chores.model.enums.UserRole;
+import com.robertreed4501.chores.model.http.requests.UpdateUserRequest;
 import com.robertreed4501.chores.model.http.response.LoginResponse;
 import com.robertreed4501.chores.model.http.response.UserResponse;
 import com.robertreed4501.chores.model.http.response.UsersInGroupResponse;
@@ -8,7 +10,9 @@ import com.robertreed4501.chores.repository.UserGroupRepository;
 import com.robertreed4501.chores.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NonUniqueResultException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,18 +31,16 @@ public class UserService {
     }
 
     public List<UserResponse> getUsersByGroupId(Long id) {
-        /*try{
-            List<UsersInGroupResponse> userList = new ArrayList<>();
-            userGroupRepository.findById(id).get().getUsers().stream().forEach(user -> {
-                userList.add(new UsersInGroupResponse(user.getId(), user.getFirstName()));
-            });
-            return userList;
-        }catch(NoSuchElementException e){
-            return null;
-        }*/
-        return userGroupRepository.findById(id).get().getUsers().stream().map(user ->
-                user.getUserResponse()
-                ).collect(Collectors.toList());
+
+        return userGroupRepository.
+                findById(id).
+                get().
+                getUsers().
+                stream().
+                filter(user -> user.getEnabled()).
+                map(user -> user.getUserResponse()
+                ).
+                collect(Collectors.toList());
     }
 
     public User getUserByUsername(String username) {
@@ -73,6 +75,35 @@ public class UserService {
     }
 
     public User findUserByEmail(String email) {
-        return userRepository.findUserByEmail(email).get();
+        try{
+            return userRepository.findUserByEmail(email).get();
+        }
+        catch (NonUniqueResultException e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    public boolean existsByEmail(String email){
+        return userRepository.existsByEmail(email);
+    }
+
+    @Transactional
+    public String deleteUser(Long id) {
+        userRepository.getReferenceById(id).setEnabled(false);
+        return "user deactivated";
+    }
+
+    @Transactional
+    public String updateUser(UpdateUserRequest request) {
+        User user = userRepository.getReferenceById(request.getId());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setEmail(request.getEmail());
+        if (request.getRole().toUpperCase().equals(UserRole.USER))
+            user.setAppUserRole(UserRole.USER);
+        else if (request.getRole().toUpperCase().equals(UserRole.ADMIN))
+            user.setAppUserRole(UserRole.ADMIN);
+        return "user updated";
     }
 }
