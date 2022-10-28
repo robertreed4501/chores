@@ -18,6 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //@Query(value = "SELECT * FROM user WHERE api_key = :apiKey", nativeQuery = true)
     User findUserByApiKey(String apiKey);
 
-
+    boolean existsByEmail(String email);
 
 }
