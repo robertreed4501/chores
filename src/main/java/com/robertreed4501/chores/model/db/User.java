@@ -34,7 +34,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole appUserRole;
     private Boolean locked = false;
-    private Boolean enabled = false;
+    private Boolean enabled = true;
     @ManyToOne
     @JsonBackReference
     @JoinColumn(
