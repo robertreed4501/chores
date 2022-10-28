@@ -100,9 +100,9 @@ public class UserService {
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
-        if (request.getRole().toUpperCase().equals(UserRole.USER))
+        if (request.getRole().toUpperCase().equals(UserRole.USER.name()))
             user.setAppUserRole(UserRole.USER);
-        else if (request.getRole().toUpperCase().equals(UserRole.ADMIN))
+        else if (request.getRole().toUpperCase().equals(UserRole.ADMIN.name()))
             user.setAppUserRole(UserRole.ADMIN);
         return "user updated";
     }
