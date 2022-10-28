@@ -1,11 +1,8 @@
 package com.robertreed4501.chores.controller;
 
-import com.robertreed4501.chores.model.db.User;
-import com.robertreed4501.chores.model.db.UserGroup;
+import com.robertreed4501.chores.model.http.requests.UpdateUserRequest;
 import com.robertreed4501.chores.model.http.response.LoginResponse;
 import com.robertreed4501.chores.model.http.response.UserResponse;
-import com.robertreed4501.chores.model.http.response.UsersInGroupResponse;
-import com.robertreed4501.chores.repository.UserGroupRepository;
 import com.robertreed4501.chores.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -28,5 +25,15 @@ public class UserController {
     @GetMapping
     public LoginResponse getUserByKey(@RequestHeader("key") String key) {
         return userService.getUserLoginResponseByApiKey(key);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public String deleteUserById(@PathVariable Long id) {
+        return userService.deleteUser(id);
+    }
+
+    @PostMapping(value = "/update")
+    public String updateUser(@RequestBody UpdateUserRequest request){
+        return userService.updateUser(request);
     }
 }
