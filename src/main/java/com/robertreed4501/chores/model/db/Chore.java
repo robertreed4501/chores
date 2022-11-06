@@ -42,6 +42,7 @@ public class Chore {
     )
     private UserGroup userGroup;
     private boolean enabled = true;
+    private String desc;
 
     public Chore(String name, ChoreLevel choreLevel, int multiplier, Scope scope, UserGroup userGroup) {
         this.name = name;
