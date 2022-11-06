@@ -94,4 +94,10 @@ public class AssignmentService {
 
         return dashboardService.getDashboard(request.getGroupId());
     }
+
+    @Transactional
+    public String deleteAllAssignments(Long id) {
+        assignmentRepository.setAllInactive(id);
+        return "assignments deleted";
+    }
 }

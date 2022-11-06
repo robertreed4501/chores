@@ -25,6 +25,10 @@ public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
     @Query(value = "UPDATE Assignment SET active=0 WHERE id=?1")
     int setInactive(Long id);
 
+    @Modifying
+    @Query(value = "UPDATE Assignment SET active=0 WHERE user.id=?1")
+    int setAllInactive(Long id);
+
     //@Query(value = "SELECT Assignment FROM Assignment WHERE user.id=?1 AND chore.id=?2")
     Optional<List<Assignment>> findByUserAndChoreAndActive(User user, Chore chore, boolean active);
 

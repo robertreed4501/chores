@@ -34,4 +34,10 @@ public class AssignmentController {
     public List<DashCard> deleteAssignment(@RequestBody DeleteAssignmentRequest request){
         return assignmentService.deleteAssignment(request);
     }
+
+    @CrossOrigin
+    @DeleteMapping("/delete/{id}")
+    public String deleteAllAssignments(@PathVariable Long id) {
+        return assignmentService.deleteAllAssignments(id);
+    }
 }
