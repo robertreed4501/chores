@@ -106,4 +106,8 @@ public class UserService {
             user.setAppUserRole(UserRole.ADMIN);
         return "user updated";
     }
+
+    public User getUserById(Long id){
+        return userRepository.getReferenceById(id);
+    }
 }
