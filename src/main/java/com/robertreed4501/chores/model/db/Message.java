@@ -1,5 +1,6 @@
 package com.robertreed4501.chores.model.db;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class Message {
             generator = "message_sequence"
     )
     private Long id;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(
             nullable = false,
@@ -30,6 +32,7 @@ public class Message {
             referencedColumnName = "id"
     )
     private User userIdTo;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(
             nullable = false,
@@ -42,8 +45,9 @@ public class Message {
     private LocalDateTime sentAt;
     private LocalDateTime readAt;
     private Boolean hasBeenRead;
+    private Boolean deleted;
 
-    public Message(User userIdTo, User userIdFrom, String subject, String body, LocalDateTime sentAt, LocalDateTime readAt, Boolean hasBeenRead) {
+    public Message(User userIdTo, User userIdFrom, String subject, String body, LocalDateTime sentAt, LocalDateTime readAt, Boolean hasBeenRead, Boolean deleted) {
         this.userIdTo = userIdTo;
         this.userIdFrom = userIdFrom;
         this.subject = subject;
@@ -51,5 +55,6 @@ public class Message {
         this.sentAt = sentAt;
         this.readAt = readAt;
         this.hasBeenRead = hasBeenRead;
+        this.deleted = deleted;
     }
 }
