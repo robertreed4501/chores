@@ -25,6 +25,7 @@ public class Dashboard {
     private Long groupId;
     private Long assignmentId;
     private String name;
+    private String description;
     private int multiplier;
     private String done;
 
