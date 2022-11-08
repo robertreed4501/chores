@@ -2,7 +2,6 @@ package com.robertreed4501.chores.model.db;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.robertreed4501.chores.model.enums.ChoreLevel;
-import com.robertreed4501.chores.model.enums.Frequency;
 import com.robertreed4501.chores.model.enums.Scope;
 import lombok.*;
 
@@ -42,10 +41,11 @@ public class Chore {
     )
     private UserGroup userGroup;
     private boolean enabled = true;
-    private String desc;
+    private String description;
 
-    public Chore(String name, ChoreLevel choreLevel, int multiplier, Scope scope, UserGroup userGroup) {
+    public Chore(String name, String description, ChoreLevel choreLevel, int multiplier, Scope scope, UserGroup userGroup) {
         this.name = name;
+        this.description = description;
         this.choreLevel = choreLevel;
         this.multiplier = multiplier;
         this.scope = scope;
