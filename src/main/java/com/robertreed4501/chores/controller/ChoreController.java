@@ -5,6 +5,7 @@ import com.robertreed4501.chores.model.enums.ChoreLevel;
 import com.robertreed4501.chores.model.enums.Frequency;
 import com.robertreed4501.chores.model.enums.Scope;
 import com.robertreed4501.chores.model.http.requests.ChoreRequest;
+import com.robertreed4501.chores.model.http.requests.UpdateChoreRequest;
 import com.robertreed4501.chores.model.http.response.DashCard;
 import com.robertreed4501.chores.service.ChoreService;
 import com.robertreed4501.chores.service.DashboardService;
@@ -31,8 +32,9 @@ public class ChoreController {
         choreService.AddChore(
                 new Chore(
                         choreRequest.getName(),
+                        choreRequest.getDesc(),
                         ChoreLevel.MEDIUM,
-                        1,
+                        choreRequest.getMultiplier(),
                         Scope.PERSONAL,
                         userGroupService.findById(choreRequest.getUserGroupId())
                 )
@@ -53,5 +55,11 @@ public class ChoreController {
 
         return new ResponseEntity("deleted", HttpStatus.OK);
 
+    }
+
+    @PostMapping("/update")
+    public List<Chore> updateChore (@RequestBody UpdateChoreRequest request) {
+        choreService.updateChore(request);
+        return choreService.getChoresByGroupId(request.getUserGroupId());
     }
 }

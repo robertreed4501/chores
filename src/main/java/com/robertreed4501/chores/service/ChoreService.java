@@ -2,15 +2,16 @@ package com.robertreed4501.chores.service;
 
 import com.robertreed4501.chores.model.db.Chore;
 import com.robertreed4501.chores.model.db.UserGroup;
+import com.robertreed4501.chores.model.http.requests.UpdateChoreRequest;
 import com.robertreed4501.chores.repository.ChoreRepository;
 import com.robertreed4501.chores.repository.UserGroupRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,5 +46,14 @@ public class ChoreService {
         Long groupId = chore.getUserGroup().getId();
         chore.setEnabled(false);
         return groupId;
+    }
+
+    @Modifying
+    public void updateChore(UpdateChoreRequest request) {
+        Chore chore = choreRepository.findById(request.getId()).get();
+        chore.setName(request.getName());
+        chore.setDescription(request.getDescription());
+        chore.setMultiplier(request.getMultiplier());
+
     }
 }
