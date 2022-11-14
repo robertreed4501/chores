@@ -7,6 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 @Getter
@@ -44,9 +51,20 @@ public class Assignment {
     private List<Receipt> receipts;
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean active = true;
+    private LocalDateTime start;
+    private LocalDateTime end;
+    private Boolean done = false;
+    private Boolean approved = false;
 
     public Assignment(User user, Chore chore) {
+
+        LocalDateTime currentTime = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
+        LocalDateTime prevMonday = currentTime.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDateTime nextSundayNight = currentTime.with(TemporalAdjusters.next(DayOfWeek.MONDAY)).minusSeconds(1);
+
         this.user = user;
         this.chore = chore;
+        this.start = prevMonday;
+        this.end = nextSundayNight;
     }
 }
