@@ -4,6 +4,9 @@ import com.robertreed4501.chores.model.db.User;
 import com.robertreed4501.chores.model.http.requests.LoginRequest;
 import com.robertreed4501.chores.model.http.response.LoginResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +18,7 @@ import java.util.UUID;
 public class LoginService {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     public LoginResponse Login(LoginRequest request) {
         String username = request.getUsername();
@@ -26,8 +30,10 @@ public class LoginService {
             return response;
         }
 
-
-        if (!password.equals(user.getPassword())) {
+        System.out.println(password + " - password, " + user.getPassword() + " - user.getPassword() - LoginService.java");
+        System.out.println(passwordEncoder.matches(request.getPassword(), user.getPassword()) + " - bool for checking pw against hash");
+/*        if (!password.equals(user.getPassword())) {*/
+            if (!BCrypt.checkpw(request.getPassword(), user.getPassword())) {
             response = new LoginResponse(null, "invalid password");
         } else{
             String key = UUID.randomUUID().toString();
