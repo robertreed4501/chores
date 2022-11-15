@@ -27,6 +27,6 @@ public class Dashboard {
     private String name;
     private String description;
     private int multiplier;
-    private String done;
+    private Boolean done;
 
 }
