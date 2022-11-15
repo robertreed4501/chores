@@ -8,6 +8,8 @@ import com.robertreed4501.chores.model.enums.UserRole;
 import com.robertreed4501.chores.model.http.response.UserResponse;
 import com.robertreed4501.chores.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,11 +26,14 @@ public class RegistrationService {
 
     private final UserService userService;
     private final UserGroupService userGroupService;
-    //private final MailSenderService mailSenderService;
+    private final PasswordEncoder passwordEncoder;
 
     public String register(RegistrationRequest request){
         if (userService.existsByEmail(request.getEmail())) return "Email already exists.";
-        User user = new User(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), UserRole.OWNER, request.getDob());
+        String hashedPassword = passwordEncoder.encode(request.getPassword());
+        System.out.println(request.getPassword() + " - the plaintext password from registrationRequest");
+        System.out.println(hashedPassword + " - the hashed password from registrationService");
+        User user = new User(request.getFirstName(), request.getLastName(), request.getEmail(), hashedPassword, UserRole.OWNER, request.getDob());
         UUID key = UUID.randomUUID();
         user.setApiKey(key.toString());
         System.out.println(user.getId() + " - user.getId()");
