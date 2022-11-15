@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -39,8 +40,18 @@ public class AssignmentService {
 
     @Transactional
     public void addAssignment(AssignmentRequest request) {
-        User user = userRepository.findById(request.getUserId()).orElseThrow();
-        List<Chore> chores = request.getChoreId().stream().map(choreID -> {
+        User user = userRepository.findById(request.getUserId()).get();
+        List<Assignment> assignments = new ArrayList<>();
+        request.getChoreId().stream().forEach(choreId -> {
+            Chore chore = choreRepository.findById(choreId).get();
+            for ( int i = 0; i < chore.getMultiplier(); i++){
+                assignments.add(new Assignment(user, chore));
+            }
+
+        });
+
+        assignmentRepository.saveAll(assignments);
+        /*List<Chore> chores = request.getChoreId().stream().map(choreID -> {
             //for each choreID, check if an inactive assignment exists
             //if it does, check if list size = multiplier
             //for multiplier - list size, add assignments, reactivate the rest
@@ -74,7 +85,7 @@ public class AssignmentService {
                     inactiveAssignments.stream().forEach(assignment -> assignment.setActive(true));
                 }
             }
-        });
+        });*/
     }
 
     public Assignment getAssignmentById(Long id){
