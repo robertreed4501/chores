@@ -1,5 +1,6 @@
 package com.robertreed4501.chores.controller;
 
+import com.robertreed4501.chores.model.http.response.GroupStatsEntry;
 import com.robertreed4501.chores.model.http.response.UserStatsEntry;
 import com.robertreed4501.chores.service.StatsService;
 import lombok.AllArgsConstructor;
@@ -20,5 +21,10 @@ public class StatsController {
     @GetMapping
     public List<UserStatsEntry> getUserStats (@RequestParam Long userId, @RequestParam Long numWeeks) {
         return statsService.getUserStats(userId, numWeeks);
+    }
+
+    @GetMapping("/mygroup")
+    public List<GroupStatsEntry> getGroupStats (@RequestParam Long groupId) {
+        return statsService.getGroupStats(groupId);
     }
 }
