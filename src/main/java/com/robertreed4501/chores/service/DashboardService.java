@@ -44,6 +44,8 @@ public class DashboardService {
 
     public DashCard getUserDashCard(Long userId) {
         List<Dashboard> fullDashboard = dashboardRepository.findAllByUserId(userId);
+        if (fullDashboard.isEmpty()) return null;
+        System.out.println(fullDashboard.size() + " - error incoming?  is dashboard.size 0?");
         List<DashCard> cardList = new ArrayList<>();
         //go through dashboard view results row by row and create a card for each new name
         //or add row to existing card with matching name.
