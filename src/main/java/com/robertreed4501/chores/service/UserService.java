@@ -1,11 +1,9 @@
 package com.robertreed4501.chores.service;
 
 import com.robertreed4501.chores.model.db.User;
-import com.robertreed4501.chores.model.enums.UserRole;
 import com.robertreed4501.chores.model.http.requests.UpdateUserRequest;
 import com.robertreed4501.chores.model.http.response.LoginResponse;
 import com.robertreed4501.chores.model.http.response.UserResponse;
-import com.robertreed4501.chores.model.http.response.UsersInGroupResponse;
 import com.robertreed4501.chores.repository.UserGroupRepository;
 import com.robertreed4501.chores.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -13,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NonUniqueResultException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,6 +57,9 @@ public class UserService {
     public LoginResponse getUserLoginResponseByApiKey(String key) {
         User user = userRepository.findUserByApiKey(key);
 
+        if (user == null){
+            return new LoginResponse(null, "key does not exist");
+        }
         return new LoginResponse(
                 new UserResponse(
                         user.getId(),
@@ -100,10 +99,10 @@ public class UserService {
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
-        if (request.getRole().toUpperCase().equals(UserRole.USER.name()))
-            user.setAppUserRole(UserRole.USER);
-        else if (request.getRole().toUpperCase().equals(UserRole.ADMIN.name()))
-            user.setAppUserRole(UserRole.ADMIN);
+        if (request.getRole().toUpperCase().equals(com.robertreed4501.chores.model.enums.UserRole.USER.name()))
+            user.setAppUserRole(com.robertreed4501.chores.model.enums.UserRole.USER);
+        else if (request.getRole().toUpperCase().equals(com.robertreed4501.chores.model.enums.UserRole.ADMIN.name()))
+            user.setAppUserRole(com.robertreed4501.chores.model.enums.UserRole.ADMIN);
         return "user updated";
     }
 
