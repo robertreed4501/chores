@@ -5,19 +5,13 @@ import com.robertreed4501.chores.model.http.requests.NewUserRequest;
 import com.robertreed4501.chores.model.http.requests.RegistrationRequest;
 import com.robertreed4501.chores.model.db.User;
 import com.robertreed4501.chores.model.enums.UserRole;
-import com.robertreed4501.chores.model.http.response.UserResponse;
-import com.robertreed4501.chores.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
