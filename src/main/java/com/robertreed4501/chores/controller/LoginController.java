@@ -16,6 +16,6 @@ public class LoginController {
 
     @PostMapping
     public LoginResponse login(@RequestBody LoginRequest request){
-        return loginService.Login(request);
+        return loginService.login(request);
     }
 }
