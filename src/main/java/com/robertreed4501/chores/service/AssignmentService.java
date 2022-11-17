@@ -10,6 +10,7 @@ import com.robertreed4501.chores.repository.AssignmentRepository;
 import com.robertreed4501.chores.repository.ChoreRepository;
 import com.robertreed4501.chores.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -111,4 +112,14 @@ public class AssignmentService {
         assignmentRepository.setAllInactive(id);
         return "assignments deleted";
     }
+
+    @Transactional
+    @Modifying
+    public void deactivateAssignmentsByChoreId(Chore chore) {
+        assignmentRepository.findAssignmentsByChore(chore)
+                .stream()
+                .forEach(assignment -> assignment.setActive(false));
+    }
+
+
 }
