@@ -44,10 +44,9 @@ public class User {
             referencedColumnName = "id"
     )
     private UserGroup userGroup;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
     private List<Assignment> assignments;
-    @OneToOne(mappedBy = "user")
-    private ConfirmationToken confirmationToken;
+
     private String apiKey;
 
 
