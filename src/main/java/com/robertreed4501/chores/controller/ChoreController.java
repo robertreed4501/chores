@@ -1,9 +1,6 @@
 package com.robertreed4501.chores.controller;
 
 import com.robertreed4501.chores.model.db.Chore;
-import com.robertreed4501.chores.model.enums.ChoreLevel;
-import com.robertreed4501.chores.model.enums.Frequency;
-import com.robertreed4501.chores.model.enums.Scope;
 import com.robertreed4501.chores.model.http.requests.ChoreRequest;
 import com.robertreed4501.chores.model.http.requests.UpdateChoreRequest;
 import com.robertreed4501.chores.model.http.response.DashCard;
@@ -33,9 +30,7 @@ public class ChoreController {
                 new Chore(
                         choreRequest.getName(),
                         choreRequest.getDesc(),
-                        ChoreLevel.MEDIUM,
                         choreRequest.getMultiplier(),
-                        Scope.PERSONAL,
                         userGroupService.findById(choreRequest.getUserGroupId())
                 )
         );
@@ -55,6 +50,12 @@ public class ChoreController {
 
         return new ResponseEntity("deleted", HttpStatus.OK);
 
+    }
+
+    @PostMapping("/loadsamples/{groupId}")
+    public List<Chore> loadSampleChores (@PathVariable Long groupId){
+        choreService.loadSampleChores(groupId);
+        return getChoresByGroupId(groupId);
     }
 
     @PostMapping("/update")
