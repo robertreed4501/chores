@@ -3,11 +3,9 @@ package com.robertreed4501.chores.controller;
 import com.robertreed4501.chores.model.db.User;
 import com.robertreed4501.chores.model.enums.UserRole;
 import com.robertreed4501.chores.model.http.response.DashCard;
-import com.robertreed4501.chores.model.http.response.Dashboard;
 import com.robertreed4501.chores.service.AuthService;
 import com.robertreed4501.chores.service.DashboardService;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,15 +1,10 @@
 package com.robertreed4501.chores.model.http.response;
 
-import com.robertreed4501.chores.model.enums.Frequency;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.ReadOnlyProperty;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
 @NoArgsConstructor
