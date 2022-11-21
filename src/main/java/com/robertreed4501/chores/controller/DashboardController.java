@@ -36,4 +36,7 @@ public class DashboardController {
     public DashCard getUserDashCard(@RequestParam Long userId){
         return dashboardService.getUserDashCard(userId);
     }
+
+    @GetMapping("/lastweek/user")
+    public DashCard getLastWeeksUserDashCard(@RequestParam Long userId) {return dashboardService.getLastWeeksUserDashCard(userId);}
 }

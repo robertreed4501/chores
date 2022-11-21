@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 public class ChoreRequest {
     private final String name;
-    private final String desc;
+    private final String description;
     private final int multiplier;
     private final Long userGroupId;
 }

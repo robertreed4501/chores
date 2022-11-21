@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -52,41 +53,6 @@ public class AssignmentService {
         });
 
         assignmentRepository.saveAll(assignments);
-        /*List<Chore> chores = request.getChoreId().stream().map(choreID -> {
-            //for each choreID, check if an inactive assignment exists
-            //if it does, check if list size = multiplier
-            //for multiplier - list size, add assignments, reactivate the rest
-            return choreRepository.findById(choreID).orElseThrow();
-        }).collect(Collectors.toList());
-
-        chores.stream().forEach(chore -> {
-            Optional<List<Assignment>> possibleInactiveAssignments = assignmentRepository.findByUserAndChoreAndActive(
-                    user,
-                    chore,
-                    false
-            );
-
-
-
-            if (possibleInactiveAssignments.isPresent()){
-                List<Assignment> inactiveAssignments = possibleInactiveAssignments.get();
-                int numInactiveAssignments = inactiveAssignments.size();
-                int multiplier = chore.getMultiplier();
-
-                if (numInactiveAssignments >= multiplier) {
-                    for (int i = 0; i < multiplier; i++){
-                        inactiveAssignments.get(i).setActive(true);
-                    }
-                }
-                else {
-                    int newAssignmentsNeeded = multiplier - numInactiveAssignments;
-                    for (int i = 0; i < newAssignmentsNeeded; i++){
-                        assignmentRepository.save(new Assignment(user, chore));
-                    }
-                    inactiveAssignments.stream().forEach(assignment -> assignment.setActive(true));
-                }
-            }
-        });*/
     }
 
     public Assignment getAssignmentById(Long id){
@@ -95,22 +61,17 @@ public class AssignmentService {
 
     @Transactional
     public List<DashCard> deleteAssignment(DeleteAssignmentRequest request) {
-        /*Assignment assignment = assignmentRepository.findById(request.getAssignmentId()).orElseThrow();
-        assignment.setActive(false);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
         assignmentRepository.setInactive(request.getAssignmentId());
-
         return dashboardService.getDashboard(request.getGroupId());
     }
 
     @Transactional
     public String deleteAllAssignments(Long id) {
-        assignmentRepository.setAllInactive(id);
-        return "assignments deleted";
+        User user = userRepository.findById(id).get();
+        List<Assignment> assignmentList = assignmentRepository
+                .getAssignmentsByUserAndActiveAndStartIsBeforeAndEndIsAfter(user, true, LocalDateTime.now(), LocalDateTime.now());
+        assignmentList.stream().forEach(assignment -> assignment.setActive(false));
+        return "Assignments deleted";
     }
 
     @Transactional

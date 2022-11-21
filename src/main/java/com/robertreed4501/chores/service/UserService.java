@@ -1,6 +1,7 @@
 package com.robertreed4501.chores.service;
 
 import com.robertreed4501.chores.model.db.User;
+import com.robertreed4501.chores.model.enums.UserRole;
 import com.robertreed4501.chores.model.http.requests.UpdateUserRequest;
 import com.robertreed4501.chores.model.http.response.LoginResponse;
 import com.robertreed4501.chores.model.http.response.UserResponse;
@@ -89,7 +90,11 @@ public class UserService {
 
     @Transactional
     public String deleteUser(Long id) {
-        userRepository.getReferenceById(id).setEnabled(false);
+        User user = userRepository.getReferenceById(id);
+        if (user.getAppUserRole() == UserRole.OWNER){
+            return "Cannot delete account owner.";
+        }
+        user.setEnabled(false);
         return "user deactivated";
     }
 

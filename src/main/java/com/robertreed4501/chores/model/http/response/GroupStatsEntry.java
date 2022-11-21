@@ -9,7 +9,9 @@ import lombok.Setter;
 @Setter
 public class GroupStatsEntry {
 
+    private Long userId;
     private String name;
     private int percentDoneThisWeek;
+    private int percentDoneLastWeek;
     private int percentDoneAllTime;
 }

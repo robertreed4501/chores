@@ -6,7 +6,6 @@ import com.robertreed4501.chores.model.db.User;
 import com.robertreed4501.chores.model.http.response.GroupStatsEntry;
 import com.robertreed4501.chores.model.http.response.UserResponse;
 import com.robertreed4501.chores.model.http.response.UserStatsEntry;
-import jdk.jfr.Percentage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
 public class StatsService {
 
     private final AssignmentService assignmentService;
-    private final ReceiptService receiptService;
     private final UserService userService;
 
     public List<UserStatsEntry> getUserStats(Long id, Long numWeeks) {
@@ -69,13 +67,11 @@ public class StatsService {
         List<GroupStatsEntry> groupStats = new ArrayList<>();
         List<UserResponse> users = userService.getUsersByGroupId(groupId);
         LocalDateTime currentTime = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
-        LocalDateTime prevMonday = currentTime.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        LocalDateTime nextSundayNight = currentTime.with(TemporalAdjusters.next(DayOfWeek.MONDAY)).minusSeconds(1);
 
         users.stream().forEach(user -> {
             List<Assignment> allAssignments = assignmentService.getAssignmentsByUserId(user.getId())
                     .stream()
-                    .filter(assignment -> assignment.isActive())
+                    .filter(assignment -> assignment.isActive() && LocalDateTime.now().isAfter(assignment.getStart()))
                     .collect(Collectors.toList());
             int numAllAssignments = allAssignments.size();
             int numAllCompletedAssignments = allAssignments
@@ -104,10 +100,28 @@ public class StatsService {
                 percentDoneThisWeek = ((numCompletedThisWeek * 100) / numWeeksAssignments);
             }
             else percentDoneThisWeek = 0;
+            List<Assignment> lastWeeksAssignments = allAssignments
+                    .stream()
+                    .filter(assignment -> assignment.getStart().isBefore(LocalDateTime.now().minusWeeks(1))
+                            && assignment.getEnd().isAfter(LocalDateTime.now().minusWeeks(1)))
+                    .collect(Collectors.toList());
+            int numLastWeeksAssignments = lastWeeksAssignments.size();
+            int numCompletedLastWeek = lastWeeksAssignments
+                    .stream()
+                    .filter(assignment -> assignment.getDone())
+                    .collect(Collectors.toList())
+                    .size();
+            int percentDoneLastWeek;
+            if (numLastWeeksAssignments > 0){
+                percentDoneLastWeek = ((numCompletedLastWeek * 100) / numLastWeeksAssignments);
+            }
+            else percentDoneLastWeek = 0;
 
             groupStats.add(new GroupStatsEntry(
+                    user.getId(),
                     user.getFirstName() + " " + user.getLastName(),
                     percentDoneThisWeek,
+                    percentDoneLastWeek,
                     percentDoneAllTime
             ));
         });

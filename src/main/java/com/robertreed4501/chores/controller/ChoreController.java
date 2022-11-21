@@ -29,7 +29,7 @@ public class ChoreController {
         choreService.AddChore(
                 new Chore(
                         choreRequest.getName(),
-                        choreRequest.getDesc(),
+                        choreRequest.getDescription(),
                         choreRequest.getMultiplier(),
                         userGroupService.findById(choreRequest.getUserGroupId())
                 )

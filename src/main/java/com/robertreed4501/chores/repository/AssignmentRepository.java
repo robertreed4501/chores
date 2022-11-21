@@ -6,7 +6,10 @@ import com.robertreed4501.chores.model.db.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -24,6 +27,12 @@ public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
     @Modifying
     @Query(value = "UPDATE Assignment SET active=0 WHERE user.id=?1")
     int setAllInactive(Long id);
+
+    List<Assignment> getAssignmentsByUserAndActiveAndStartIsBeforeAndEndIsAfter (
+            User user,
+            Boolean active,
+            @Param("now") LocalDateTime now,
+            @Param("nowAgain") LocalDateTime nowAgain);
 
     List<Assignment> findAssignmentsByChore (Chore chore);
 }

@@ -27,7 +27,13 @@ public class RegistrationService {
         String hashedPassword = passwordEncoder.encode(request.getPassword());
         System.out.println(request.getPassword() + " - the plaintext password from registrationRequest");
         System.out.println(hashedPassword + " - the hashed password from registrationService");
-        User user = new User(request.getFirstName(), request.getLastName(), request.getEmail(), hashedPassword, UserRole.OWNER, request.getDob());
+        User user = new User(
+                request.getFirstName(),
+                request.getLastName(),
+                request.getEmail(),
+                hashedPassword,
+                UserRole.OWNER,
+                request.getDob());
         UUID key = UUID.randomUUID();
         user.setApiKey(key.toString());
         System.out.println(user.getId() + " - user.getId()");
@@ -45,7 +51,13 @@ public class RegistrationService {
 
     public String addUser(NewUserRequest request) {
 
-        User currUser = new User(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), UserRole.USER, request.getDob());
+        User currUser = new User(
+                request.getFirstName(),
+                request.getLastName(),
+                request.getEmail(),
+                passwordEncoder.encode(request.getPassword()),
+                UserRole.USER,
+                request.getDob());
         currUser.setUserGroup(userGroupService.findById(request.getGroupId()));
         return userService.addUser(currUser);
 
