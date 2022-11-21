@@ -1,0 +1,36 @@
+server:
+#  ssl:
+#    key-store: classpath:springboot.p12
+#    key-store-password: mobius42
+#    key-store-type: pkcs12
+#    key-alias: springboot
+#    key-password: mobius42
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/chores1
+    username: "rob"
+    password: "mobius42"
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+    show-sql: true
+  mail:
+    host: localhost
+    port: 1025
+    username: hello
+    password: hello
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
