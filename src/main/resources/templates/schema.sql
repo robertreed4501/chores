@@ -1,111 +1,151 @@
-CREATE TABLE assignment
+create table if not exists assignment_sequence
 (
-    id       BIGINT NOT NULL,
-    user_id  BIGINT NOT NULL,
-    chore_id BIGINT NOT NULL,
-    CONSTRAINT pk_assignment PRIMARY KEY (id)
+    next_val bigint null
 );
 
-CREATE TABLE chore
+create table if not exists chore_sequence
 (
-    id          BIGINT NOT NULL,
-    name        VARCHAR(255) NULL,
-    chore_level VARCHAR(255) NULL,
-    frequency   VARCHAR(255) NULL,
-    scope       VARCHAR(255) NULL,
-    group_id    BIGINT NULL,
-    CONSTRAINT pk_chore PRIMARY KEY (id)
+    next_val bigint null
 );
 
-CREATE TABLE message
+create table if not exists message_sequence
 (
-    id            BIGINT NOT NULL,
-    user_id_to    BIGINT NOT NULL,
-    user_id_from  BIGINT NOT NULL,
-    subject       VARCHAR(255) NULL,
-    body          VARCHAR(255) NULL,
-    sent_at       datetime NULL,
-    read_at       datetime NULL,
-    has_been_read BIT(1) NULL,
-    CONSTRAINT pk_message PRIMARY KEY (id)
+    next_val bigint null
 );
 
-CREATE TABLE receipt
+create table if not exists receipt_sequence
 (
-    id            BIGINT NOT NULL,
-    assignment_id BIGINT NOT NULL,
-    timestamp     datetime NULL,
-    confirmed     BIT(1) NOT NULL,
-    paid          BIT(1) NOT NULL,
-    CONSTRAINT pk_receipt PRIMARY KEY (id)
+    next_val bigint null
 );
 
-CREATE TABLE token
+create table if not exists user
 (
-    id           BIGINT       NOT NULL,
-    token        VARCHAR(255) NOT NULL,
-    created_at   datetime     NOT NULL,
-    expires_at   datetime     NOT NULL,
-    confirmed_at datetime NULL,
-    user_id      BIGINT       NOT NULL,
-    CONSTRAINT pk_token PRIMARY KEY (id)
+    id            bigint       not null
+        primary key,
+    api_key       varchar(255) null,
+    app_user_role varchar(255) null,
+    dob           varchar(255) null,
+    email         varchar(255) null,
+    enabled       bit          null,
+    first_name    varchar(255) null,
+    last_name     varchar(255) null,
+    locked        bit          null,
+    password      varchar(255) null,
+    group_id      bigint       null
 );
 
-CREATE TABLE user
+create table if not exists message
 (
-    id            BIGINT NOT NULL,
-    first_name    VARCHAR(255) NULL,
-    last_name     VARCHAR(255) NULL,
-    email         VARCHAR(255) NULL,
-    password      VARCHAR(255) NULL,
-    dob           VARCHAR(255) NULL,
-    app_user_role VARCHAR(255) NULL,
-    `locked`      BIT(1) NULL,
-    enabled       BIT(1) NULL,
-    group_id      BIGINT NULL,
-    CONSTRAINT pk_user PRIMARY KEY (id)
+    id            bigint           not null
+        primary key,
+    body          varchar(255)     null,
+    has_been_read bit              null,
+    read_at       datetime(6)      null,
+    sent_at       datetime(6)      null,
+    subject       varchar(255)     null,
+    user_id_from  bigint           not null,
+    user_id_to    bigint           not null,
+    deleted       bit default b'0' null,
+    constraint FKrivvq3p0w47c6fetw0lbs1vbb
+        foreign key (user_id_from) references user (id),
+    constraint FKs1f3xg9pb77b0d66npom9t1nu
+        foreign key (user_id_to) references user (id)
 );
 
-CREATE TABLE user_group
+create table if not exists user_group
 (
-    id      BIGINT NOT NULL,
-    user_id BIGINT NULL,
-    created datetime NULL,
-    CONSTRAINT pk_usergroup PRIMARY KEY (id)
+    id      bigint      not null
+        primary key,
+    created datetime(6) null,
+    user_id bigint      null,
+    constraint FK1c1dsw3q36679vaiqwvtv36a6
+        foreign key (user_id) references user (id)
+            on update cascade on delete cascade
 );
 
-ALTER TABLE assignment
-    ADD CONSTRAINT FK_ASSIGNMENT_ON_CHORE FOREIGN KEY (chore_id) REFERENCES chore (id);
+create table if not exists chore
+(
+    id          bigint           not null
+        primary key,
+    multiplier  int              null,
+    name        varchar(255)     null,
+    group_id    bigint           null,
+    enabled     bit default b'1' not null,
+    description varchar(255)     null,
+    constraint FKm2anc2dld6hovh0l18v9vpke7
+        foreign key (group_id) references user_group (id)
+);
 
-ALTER TABLE assignment
-    ADD CONSTRAINT FK_ASSIGNMENT_ON_USER FOREIGN KEY (user_id) REFERENCES user (id);
+create table if not exists assignment
+(
+    id       bigint               not null
+        primary key,
+    chore_id bigint               not null,
+    user_id  bigint               not null,
+    active   tinyint default 1    null,
+    start    datetime(6)          null,
+    end      datetime(6)          null,
+    done     bit     default b'0' null,
+    approved bit     default b'0' null,
+    constraint FK52yu4o12wefoh3q5na617u86v
+        foreign key (user_id) references user (id),
+    constraint FKecr64sk6rnqx5r74inshxxoi5
+        foreign key (chore_id) references chore (id)
+);
 
-ALTER TABLE chore
-    ADD CONSTRAINT FK_CHORE_ON_GROUP FOREIGN KEY (group_id) REFERENCES user_group (id);
+create table if not exists receipt
+(
+    id            bigint      not null
+        primary key,
+    confirmed     bit         not null,
+    paid          bit         not null,
+    timestamp     datetime(6) null,
+    assignment_id bigint      not null,
+    constraint FK4hu7ouekowna3ufpwpnikh0m1
+        foreign key (assignment_id) references assignment (id)
+);
 
-ALTER TABLE message
-    ADD CONSTRAINT FK_MESSAGE_ON_USER_ID_FROM FOREIGN KEY (user_id_from) REFERENCES user (id);
+create table if not exists user_group_sequence
+(
+    next_val bigint null
+);
 
-ALTER TABLE message
-    ADD CONSTRAINT FK_MESSAGE_ON_USER_ID_TO FOREIGN KEY (user_id_to) REFERENCES user (id);
+create table if not exists user_sequence
+(
+    next_val bigint null
+);
 
-ALTER TABLE receipt
-    ADD CONSTRAINT FK_RECEIPT_ON_ASSIGNMENT FOREIGN KEY (assignment_id) REFERENCES assignment (id);
+create or replace view dashboard as
+select row_number() OVER (ORDER BY `chores1`.`user`.`first_name` desc,`chores1`.`chore`.`multiplier` ) AS `id`,
+       `chores1`.`user`.`first_name`                                                                   AS `first_name`,
+       `chores1`.`user`.`id`                                                                           AS `user_id`,
+       `chores1`.`user`.`group_id`                                                                     AS `group_id`,
+       `chores1`.`assignment`.`id`                                                                     AS `assignment_id`,
+       `chores1`.`chore`.`name`                                                                        AS `name`,
+       `chores1`.`chore`.`description`                                                                 AS `description`,
+       `chores1`.`chore`.`multiplier`                                                                  AS `multiplier`,
+       `chores1`.`assignment`.`done`                                                                   AS `done`
+from ((`chores1`.`assignment` join `chores1`.`user` on ((`chores1`.`assignment`.`user_id` = `chores1`.`user`.`id`)))
+         join `chores1`.`chore` on ((`chores1`.`assignment`.`chore_id` = `chores1`.`chore`.`id`)))
+where ((`chores1`.`assignment`.`active` = 1) and (`chores1`.`user`.`enabled` = 1) and
+       (`chores1`.`chore`.`enabled` = 1) and
+       (now() between `chores1`.`assignment`.`start` and `chores1`.`assignment`.`end`))
+order by `chores1`.`user`.`first_name` desc, `chores1`.`chore`.`multiplier`;
 
-ALTER TABLE token
-    ADD CONSTRAINT FK_TOKEN_ON_USER FOREIGN KEY (user_id) REFERENCES user (id);
+create or replace view last_weeks_dashboard as
+select row_number() OVER (ORDER BY `chores1`.`user`.`first_name` desc,`chores1`.`chore`.`multiplier` ) AS `id`,
+       `chores1`.`user`.`first_name`                                                                   AS `first_name`,
+       `chores1`.`user`.`id`                                                                           AS `user_id`,
+       `chores1`.`user`.`group_id`                                                                     AS `group_id`,
+       `chores1`.`assignment`.`id`                                                                     AS `assignment_id`,
+       `chores1`.`chore`.`name`                                                                        AS `name`,
+       `chores1`.`chore`.`description`                                                                 AS `description`,
+       `chores1`.`chore`.`multiplier`                                                                  AS `multiplier`,
+       `chores1`.`assignment`.`done`                                                                   AS `done`
+from ((`chores1`.`assignment` join `chores1`.`user` on ((`chores1`.`assignment`.`user_id` = `chores1`.`user`.`id`)))
+         join `chores1`.`chore` on ((`chores1`.`assignment`.`chore_id` = `chores1`.`chore`.`id`)))
+where ((`chores1`.`assignment`.`active` = 1) and (`chores1`.`user`.`enabled` = 1) and
+       (`chores1`.`chore`.`enabled` = 1) and
+       ((now() - interval 1 week) between `chores1`.`assignment`.`start` and `chores1`.`assignment`.`end`))
+order by `chores1`.`user`.`first_name` desc, `chores1`.`chore`.`multiplier`;
 
-ALTER TABLE user_group
-    ADD CONSTRAINT FK_USERGROUP_ON_USER FOREIGN KEY (user_id) REFERENCES user (id);
-
-ALTER TABLE user
-    ADD CONSTRAINT FK_USER_ON_GROUP FOREIGN KEY (group_id) REFERENCES user_group (id);
-
-CREATE VIEW `chores1`.`dashboard`AS (
-    SELECT `chores1`.`user`.`first_name`, `user`.`id`, `user`.`group_id`, `chore`.`name`, `chore`.`frequency`,
-    CASE WHEN EXISTS (SELECT `receipt`.`id` FROM `chores1`.`receipt` WHERE `receipt`.`assignment_id` = `assignment`.`id`) THEN 'true'
-        ELSE 'false' END AS `done`
-    FROM `chores1`.`assignment`
-    JOIN `chores1`.`user` ON `assignment`.`user_id` = `user`.`id`
-    JOIN `chores1`.`chore` ON `assignment`.`chore_id` = `chore`.`id`
-    ORDER BY `first_name`, `frequency` DESC);
