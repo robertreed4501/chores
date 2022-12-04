@@ -1,10 +1,10 @@
 server:
-#  ssl:
-#    key-store: classpath:springboot.p12
-#    key-store-password: mobius42
-#    key-store-type: pkcs12
-#    key-alias: springboot
-#    key-password: mobius42
+  ssl:
+    key-store: classpath:springboot.p12
+    key-store-password: mobius42
+    key-store-type: pkcs12
+    key-alias: springboot
+    key-password: mobius42
   port: 8080
 spring:
   datasource:
