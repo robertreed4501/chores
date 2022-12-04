@@ -15,7 +15,7 @@ public class WebConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+    /*@Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             @Override
@@ -23,5 +23,5 @@ public class WebConfig {
                 registry.addMapping("/**").allowedOrigins("https://choresgalore.site/");
             }
         };
-    }
+    }*/
 }
