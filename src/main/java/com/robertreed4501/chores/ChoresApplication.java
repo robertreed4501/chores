@@ -27,7 +27,9 @@ public class ChoresApplication {
 		return new WebMvcConfigurerAdapter() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("https://choresgalore.site/");
+				registry.addMapping("/**")
+						.allowedOrigins("https://choresgalore.site/")
+						.allowedHeaders("Content-Type");
 			}
 		};
 	}
