@@ -1,3 +1,4 @@
+/*
 package com.robertreed4501.chores.config;
 
 import org.springframework.stereotype.Component;
@@ -21,3 +22,4 @@ public class CorsResponseFilter extends OncePerRequestFilter {
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }
+*/
