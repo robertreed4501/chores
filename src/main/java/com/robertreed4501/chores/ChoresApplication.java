@@ -28,7 +28,7 @@ public class ChoresApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("https://choresgalore.site/")
+						.allowedOrigins("*")
 						.allowedHeaders("Authorization, Content-Type, enctype, key, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers");
 			}
 		};
