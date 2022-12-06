@@ -22,7 +22,7 @@ public class ChoresApplication {
 		/*SpringApplication.run(ChoresApplication.class, args);*/
 	}
 
-	@Bean
+	/*@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurerAdapter() {
 			@Override
@@ -32,6 +32,6 @@ public class ChoresApplication {
 						.allowedHeaders("Content-Type");
 			}
 		};
-	}
+	}*/
 
 }
