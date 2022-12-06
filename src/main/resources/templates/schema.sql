@@ -3,20 +3,28 @@ create table if not exists assignment_sequence
     next_val bigint null
 );
 
+insert into assignment_sequence (next_val) values (1);
+
 create table if not exists chore_sequence
 (
     next_val bigint null
 );
+
+insert into chore_sequence (next_val) values (1);
 
 create table if not exists message_sequence
 (
     next_val bigint null
 );
 
+insert into message_sequence (next_val) values (1);
+
 create table if not exists receipt_sequence
 (
     next_val bigint null
 );
+
+insert into receipt_sequence (next_val) values (1);
 
 create table if not exists user
 (
@@ -110,10 +118,14 @@ create table if not exists user_group_sequence
     next_val bigint null
 );
 
+insert into user_group_sequence (next_val) values (1);
+
 create table if not exists user_sequence
 (
     next_val bigint null
 );
+
+insert into user_sequence (next_val) values (1);
 
 create or replace view dashboard as
 select row_number() OVER (ORDER BY `chores1`.`user`.`first_name` desc,`chores1`.`chore`.`multiplier` ) AS `id`,
@@ -148,4 +160,3 @@ where ((`chores1`.`assignment`.`active` = 1) and (`chores1`.`user`.`enabled` = 1
        (`chores1`.`chore`.`enabled` = 1) and
        ((now() - interval 1 week) between `chores1`.`assignment`.`start` and `chores1`.`assignment`.`end`))
 order by `chores1`.`user`.`first_name` desc, `chores1`.`chore`.`multiplier`;
-
