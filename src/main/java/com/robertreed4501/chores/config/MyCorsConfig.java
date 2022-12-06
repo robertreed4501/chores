@@ -19,7 +19,7 @@ public class MyCorsConfig implements Filter {
         final HttpServletResponse response = (HttpServletResponse) res;
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, enctype");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, enctype, key");
         response.setHeader("Access-Control-Max-Age", "3600");
         if (HttpMethod.OPTIONS.name().equalsIgnoreCase(((HttpServletRequest) req).getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
