@@ -3,7 +3,7 @@ server:
     key-store: classpath:keystore.p12
     key-store-password:
     key-store-type: pkcs12
-    key-alias: choresgalore_keystore
+    key-alias: 1
     key-password:
   port: 8080
 spring:
