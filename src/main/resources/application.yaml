@@ -1,10 +1,10 @@
 server:
   ssl:
-    key-store: classpath:keystore.p12
-    key-store-password:
+    key-store: classpath:keystore1.p12
+    key-store-password: password
     key-store-type: pkcs12
     key-alias: 1
-    key-password:
+    key-password: password
   port: 8080
 spring:
   datasource:
